@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Tools - Dice, Coin & Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 Random Tools 🪙</h1>
+            <p>Dice Roller, Coin Flipper & Random Quiz</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="dice">Dice Roller</button>
+            <button class="tab-button" data-tab="coin">Coin Flip</button>
+            <button class="tab-button" data-tab="quiz">Random Quiz</button>
+        </div>
+
+        <!-- Dice Roller Section -->
+        <section id="dice" class="tab-content active">
+            <div class="tool-container">
+                <div class="dice" id="diceElement">
+                    <div class="face">⚀</div>
+                </div>
+                <button id="rollDice" class="action-button">Roll Dice</button>
+                <div class="result" id="diceResult"></div>
+                <div class="history" id="diceHistory"></div>
+            </div>
+        </section>
+
+        <!-- Coin Flip Section -->
+        <section id="coin" class="tab-content">
+            <div class="tool-container">
+                <div class="coin" id="coinElement">
+                    <div class="side heads">HEADS</div>
+                    <div class="side tails">TAILS</div>
+                </div>
+                <button id="flipCoin" class="action-button">Flip Coin</button>
+                <div class="result" id="coinResult"></div>
+                <div class="history" id="coinHistory"></div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="tab-content">
+            <div class="tool-container">
+                <button id="getQuiz" class="action-button">Filter Random Quiz</button>
+                <button id="backButton" class="back-button" style="display: none;">← Back to Home</button>
+                
+                <div id="quizContainer" class="quiz-container">
+                    <div id="quizQuestion" class="quiz-question">
+                        Click "Filter Random Quiz" to get a random computer science question!
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

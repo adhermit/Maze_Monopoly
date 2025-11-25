@@ -1,0 +1,16 @@
+{
+    "name": "Random Tools - Dice, Coin & Quiz",
+    "short_name": "RandomTools",
+    "description": "A fun collection of random tools including dice roller, coin flipper, and random quiz",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4f46e5",
+    "icons": [
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiM0ZjQ2ZTUiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPgo8cGF0aCBkPSJNMTIgMkwxMi4wMDEgMjIiPjwvcGF0aD4KPHBhdGggZD0iTTEyIDJMMTcuMDY1IDcuMDY1Ij48L3BhdGg+CjxwYXRoIGQ9Ik0xMiAyTDYuOTM1IDcuMDY1Ij48L3BhdGg+CjxwYXRoIGQ9Ik0yIDEySDIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yIDEyTDUuOTM1IDE2LjA2NSI+PC9wYXRoPgo8cGF0aCBkPSJNMiAxMkw1LjkzNSA3LjkzNSI+PC9wYXRoPgo8cGF0aCBkPSJNMjIgMTJMMTguMDY1IDE2LjA2NSI+PC9wYXRoPgo8cGF0aCBkPSJNMjIgMTJMMTguMDY1IDcuOTM1Ij48L3BhdGg+CjxwYXRoIGQ9Ik0xMi4wMDEgMjJMMTIgMTIiPjwvcGF0aD4KPC9zdmc+Cjwvc3ZnPgo=",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        }
+    ]
+}
