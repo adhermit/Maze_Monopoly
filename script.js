@@ -5,14 +5,10 @@ const tabContents = document.querySelectorAll('.tab-content');
 // Dice Elements
 const diceElement = document.getElementById('diceElement');
 const rollDiceButton = document.getElementById('rollDice');
-const diceResult = document.getElementById('diceResult');
-const diceHistory = document.getElementById('diceHistory');
 
 // Coin Elements
 const coinElement = document.getElementById('coinElement');
 const flipCoinButton = document.getElementById('flipCoin');
-const coinResult = document.getElementById('coinResult');
-const coinHistory = document.getElementById('coinHistory');
 
 // Quiz Elements
 const getQuizButton = document.getElementById('getQuiz');
