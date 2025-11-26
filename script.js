@@ -20,6 +20,12 @@ const quizContainer = document.getElementById('quizContainer');
 const quizQuestion = document.getElementById('quizQuestion');
 const backButton = document.getElementById('backButton');
 
+// Dares Elements
+const getDareButton = document.getElementById('getDare');
+const getRandomButton = document.getElementById('getRandom');
+const backButtonDares = document.getElementById('backButtonDares');
+const daresContent = document.getElementById('daresContent');
+
 // State
 let diceRolls = [];
 let coinFlips = [];
@@ -195,6 +201,19 @@ const computerScienceQuiz = [
     }
 ];
 
+const daresList = [
+    "Stand up and do the chicken dance for 15 seconds",
+    "Go to the front of class and take a dramatic bow like you just finished a Broadway show",
+    "Ask the teacher 'Is this going to be on the test?' in your most serious voice",
+    "Do 10 star jumps while whispering 'I'm a shining star'",
+    "Walk to the trash can and back using only tiptoes like a ballet dancer",
+    "Sing the ABC song backwards (or attempt to!)",
+    "Ask to borrow a pen from someone 3 rows away using only hand gestures",
+    "Do your best impression of the teacher's walking style",
+    "Pretend to be a statue until someone laughs",
+    "Write 'I ❤ homework' on a piece of paper and hold it up for 10 seconds"
+];
+
 // Quiz Functionality
 function getRandomQuiz() {
     // Hide the filter button and show back button
@@ -219,6 +238,20 @@ function goBackToHome() {
     // Show filter button and hide back button
     getQuizButton.style.display = 'block';
     backButton.style.display = 'none';
+}
+
+// Dares & Advantages Functionality
+function getRandomDare() {
+    // Hide the main buttons and show back button
+    getDareButton.style.display = 'none';
+    getRandomButton.style.display = 'none';
+    backButtonDares.style.display = 'block';
+    
+    // Get a random dare
+    const randomIndex = Math.floor(Math.random() * daresList.length);
+    const dare = daresList[randomIndex];
+    
+    displayDare(dare);
 }
 
 // Event Listeners for all tools

@@ -269,6 +269,78 @@ header p {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Dares & Advantages Styles */
+.dares-container {
+    margin-top: 1rem;
+    text-align: left;
+    min-height: 300px;
+}
+
+.dares-content {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+    line-height: 1.5;
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.dare-button {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.dare-button:hover {
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+}
+
+.random-button {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.random-button:hover {
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+.dare-item {
+    background: #fef2f2;
+    border: 2px solid #fecaca;
+    color: #7f1d1d;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.advantage-item {
+    background: #f0fdf4;
+    border: 2px solid #bbf7d0;
+    color: #166534;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -342,5 +414,19 @@ header p {
     
     .result {
         font-size: 1.3rem;
+    }
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .button-group .action-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .dares-content {
+        font-size: 1.1rem;
+        padding: 1rem;
     }
 }
