@@ -15,6 +15,10 @@ const coinResult = document.getElementById('coinResult');
 // Quiz Elements
 const getQuizButton = document.getElementById('getQuiz');
 const quizQuestion = document.getElementById('quizQuestion');
+const quizAnswer = document.getElementById('quizAnswer');
+const showAnswerButton = document.getElementById('showAnswer');
+const nextQuestionButton = document.getElementById('nextQuestion');
+const quizActions = document.querySelector('.quiz-actions');
 const backButtonQuiz = document.getElementById('backButtonQuiz');
 
 // Dares Elements
@@ -79,16 +83,54 @@ function flipCoin() {
 
 // Computer Science Quiz Questions
 const computerScienceQuiz = [
-    "What is the worst-case time complexity of QuickSort?",
-    "Which algorithm finds shortest paths from a single source?",
-    "What does SQL injection attack target?",
-    "What is overfitting in machine learning?",
-    "Which data structure uses LIFO principle?",
-    "What phase converts source code to intermediate code?",
-    "What is polymorphism in OOP?",
-    "What does Big O notation represent?",
-    "Which protocol ensures data confidentiality online?",
-    "What does ACID guarantee in databases?"
+    {
+        question: "What is the worst-case time complexity of QuickSort?",
+        answer: "O(n²) - This occurs when the pivot is always the smallest or largest element, creating highly unbalanced partitions."
+    },
+    {
+        question: "Which algorithm finds shortest paths from a single source in a weighted graph?",
+        answer: "Dijkstra's Algorithm - It finds the shortest path from a single source to all other vertices in a graph with non-negative weights."
+    },
+    {
+        question: "What does SQL injection attack target?",
+        answer: "Database vulnerabilities - SQL injection exploits unsanitized user input to execute malicious SQL commands on the database."
+    },
+    {
+        question: "What is overfitting in machine learning?",
+        answer: "When a model learns the training data too well, including noise and outliers, resulting in poor performance on new, unseen data."
+    },
+    {
+        question: "Which data structure uses LIFO (Last-In-First-Out) principle?",
+        answer: "Stack - Elements are added and removed from the same end, following LIFO order."
+    },
+    {
+        question: "What is polymorphism in Object-Oriented Programming?",
+        answer: "The ability of objects of different classes to respond to the same method call in different ways, typically through method overriding."
+    },
+    {
+        question: "What does Big O notation represent?",
+        answer: "Algorithm complexity - It describes how the runtime or space requirements of an algorithm grow as the input size increases."
+    },
+    {
+        question: "Which protocol ensures data confidentiality and security online?",
+        answer: "HTTPS (HTTP Secure) - It uses SSL/TLS encryption to protect data transmitted between client and server."
+    },
+    {
+        question: "What does ACID guarantee in databases?",
+        answer: "Atomicity, Consistency, Isolation, Durability - These properties ensure reliable transaction processing in database systems."
+    },
+    {
+        question: "What is a binary search tree?",
+        answer: "A tree data structure where each node has at most two children, and for any node, all left descendants are smaller and all right descendants are larger."
+    },
+    {
+        question: "What is the difference between TCP and UDP?",
+        answer: "TCP is connection-oriented, reliable, and ensures ordered delivery. UDP is connectionless, unreliable, but faster with less overhead."
+    },
+    {
+        question: "What is recursion in programming?",
+        answer: "A technique where a function calls itself directly or indirectly to solve a problem by breaking it down into smaller subproblems."
+    }
 ];
 
 // Dares List
@@ -105,17 +147,45 @@ const daresList = [
     "Write 'I ❤ homework' and hold it up for 10 seconds"
 ];
 
+// Quiz State
+let currentQuestionIndex = -1;
+let answerRevealed = false;
+
 // QUIZ FUNCTIONALITY
 function getRandomQuiz() {
     // Hide the filter button and show back button
     getQuizButton.style.display = 'none';
     backButtonQuiz.style.display = 'block';
+    quizActions.style.display = 'flex';
     
     // Get a random question
     const randomIndex = Math.floor(Math.random() * computerScienceQuiz.length);
     const question = computerScienceQuiz[randomIndex];
+
+    // Display question and reset answer state
+    quizQuestion.textContent = questionData.question;
+    quizAnswer.style.display = 'none';
+    quizAnswer.textContent = '';
+    showAnswerButton.textContent = 'Show Answer';
+    showAnswerButton.classList.remove('revealed');
+    answerRevealed = false;
+    
+    // Enable show answer button
+    showAnswerButton.disabled = false;
     
     quizQuestion.textContent = question;
+}
+
+function showAnswer() {
+    if (!answerRevealed && currentQuestionIndex !== -1) {
+        const questionData = computerScienceQuiz[currentQuestionIndex];
+        quizAnswer.textContent = questionData.answer;
+        quizAnswer.style.display = 'block';
+        showAnswerButton.textContent = 'Answer Revealed';
+        showAnswerButton.classList.add('revealed');
+        showAnswerButton.disabled = true;
+        answerRevealed = true;
+    }
 }
 
 function goBackToQuizHome() {
@@ -192,6 +262,7 @@ flipCoinButton.addEventListener('click', flipCoin);
 coinElement.addEventListener('click', flipCoin);
 
 getQuizButton.addEventListener('click', getRandomQuiz);
+showAnswerButton.addEventListener('click', showAnswer);
 backButtonQuiz.addEventListener('click', goBackToQuizHome);
 
 getDareButton.addEventListener('click', getRandomDare);

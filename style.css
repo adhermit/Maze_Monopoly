@@ -246,6 +246,28 @@ header p {
     border: 1px solid #e2e8f0;
 }
 
+/* Quiz Answer Styles */
+.quiz-answer {
+    background: #f0f9ff;
+    border: 2px solid #0ea5e9;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #0369a1;
+    box-shadow: 0 4px 6px rgba(14, 165, 233, 0.1);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.quiz-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
 .quiz-stats {
     border-top: 1px solid #e2e8f0;
     padding-top: 1rem;
@@ -498,5 +520,20 @@ header p {
     .dares-content {
         font-size: 1.1rem;
         padding: 1rem;
+    }
+
+    .quiz-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .quiz-actions .action-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .quiz-answer {
+        padding: 1rem;
+        font-size: 1rem;
     }
 }
