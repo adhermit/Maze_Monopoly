@@ -230,68 +230,46 @@ function goBackToHome() {
     backButton.style.display = 'none';
 }
 
-// Dares & Advantages Functionality
+// Dares Functionality
 function getRandomDare() {
-    // Hide the main buttons and show back button
     getDareButton.style.display = 'none';
     getRandomButton.style.display = 'none';
     backButtonDares.style.display = 'block';
     
-    // Get a random dare
     const randomIndex = Math.floor(Math.random() * daresList.length);
     const dare = daresList[randomIndex];
-    
-    displayDare(dare);
-}
-
-function getRandomFilter() {
-    // Hide the main buttons and show back button
-    getDareButton.style.display = 'none';
-    getRandomButton.style.display = 'none';
-    backButtonDares.style.display = 'block';
-    
-    // Randomly choose between quiz question or dare/advantage
-    const randomChoice = Math.random();
-    
-    if (randomChoice < 0.5) {
-        // Show a random quiz question
-        const randomQuizIndex = Math.floor(Math.random() * computerScienceQuiz.length);
-        const quiz = computerScienceQuiz[randomQuizIndex];
-        displayQuizInDares(quiz.question);
-    } else if (randomChoice < 0.75) {
-        // Show a random dare
-        const randomDareIndex = Math.floor(Math.random() * daresList.length);
-        const dare = daresList[randomDareIndex];
-        displayDare(dare);
-    } else {
-        // Show a random advantage
-        const randomAdvantageIndex = Math.floor(Math.random() * advantagesList.length);
-        const advantage = advantagesList[randomAdvantageIndex];
-        displayAdvantage(advantage);
-    }
-}
-
-function displayDare(dare) {
     daresContent.innerHTML = `<div class="dare-item">${dare}</div>`;
 }
 
-function displayAdvantage(advantage) {
-    daresContent.innerHTML = `<div class="advantage-item">${advantage}</div>`;
-}
-
-function displayQuizInDares(question) {
-    daresContent.innerHTML = `<div class="quiz-question">${question}</div>`;
+function getRandomFilter() {
+    getDareButton.style.display = 'none';
+    getRandomButton.style.display = 'none';
+    backButtonDares.style.display = 'block';
+    
+    const randomChoice = Math.random();
+    
+    if (randomChoice < 0.5) {
+        const randomQuizIndex = Math.floor(Math.random() * computerScienceQuiz.length);
+        const quiz = computerScienceQuiz[randomQuizIndex];
+        daresContent.innerHTML = `<div class="quiz-question">${quiz.question}</div>`;
+    } else if (randomChoice < 0.75) {
+        const randomDareIndex = Math.floor(Math.random() * daresList.length);
+        const dare = daresList[randomDareIndex];
+        daresContent.innerHTML = `<div class="dare-item">${dare}</div>`;
+    } else {
+        const randomAdvantageIndex = Math.floor(Math.random() * advantagesList.length);
+        const advantage = advantagesList[randomAdvantageIndex];
+        daresContent.innerHTML = `<div class="advantage-item">${advantage}</div>`;
+    }
 }
 
 function goBackToDaresHome() {
-    // Reset dares state
     daresContent.innerHTML = 'Click "Get Dare" for dares or "Random Filter" for random quiz/dares!';
-    
-    // Show main buttons and hide back button
     getDareButton.style.display = 'block';
     getRandomButton.style.display = 'block';
     backButtonDares.style.display = 'none';
 }
+
 
 // Event Listeners for all tools
 function initializeEventListeners() {
