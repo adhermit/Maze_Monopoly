@@ -30,6 +30,12 @@ const daresContent = document.getElementById('daresContent');
 let diceRolls = [];
 let coinFlips = [];
 
+// Debug: Check if elements exist
+console.log('🔍 Debug: Checking element existence...');
+console.log('flipCoinButton:', flipCoinButton);
+console.log('coinElement:', coinElement);
+console.log('coinResult:', coinResult);
+
 // Tab Switching
 tabButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -47,6 +53,7 @@ tabButtons.forEach(button => {
 
 // Dice Roller Functionality
 function rollDice() {
+    console.log('🎲 Rolling dice...');
     // Add rolling animation
     diceElement.classList.add('rolling');
     diceResult.textContent = '';
@@ -71,8 +78,17 @@ function updateDiceHistory() {
     }
 }
 
-// Coin Flip Functionality
+// Coin Flip Functionality - COMPLETE VERSION
 function flipCoin() {
+    console.log('🪙 Flipping coin...');
+    
+    // Check if elements exist
+    if (!coinElement || !coinResult) {
+        console.error('❌ Coin elements not found!');
+        return;
+    }
+    
+    // Add flipping animation
     coinElement.classList.add('flipping');
     coinResult.textContent = '';
     
@@ -80,8 +96,15 @@ function flipCoin() {
         const isHeads = Math.random() < 0.5;
         const result = isHeads ? 'Heads' : 'Tails';
         
+        console.log('Coin flip result:', result);
+        
         // Rotate coin to show correct side
-        coinElement.style.transform = isHeads ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        if (isHeads) {
+            coinElement.style.transform = 'rotateY(0deg)';
+        } else {
+            coinElement.style.transform = 'rotateY(180deg)';
+        }
+        
         coinElement.classList.remove('flipping');
         
         coinResult.textContent = `It's ${result}!`;
@@ -104,115 +127,18 @@ const computerScienceQuiz = [
         answers: ["O(n log n)", "O(n²)", "O(log n)", "O(n)"],
         correct: 1
     },
-    {
-        question: "Which algorithm finds shortest paths from a single source?",
-        answers: ["Dijkstra", "Kruskal", "Floyd-Warshall", "Prim"],
-        correct: 0
-    },
-    {
-        question: "What does SQL injection attack target?",
-        answers: ["Databases", "Web servers", "Network packets", "User passwords"],
-        correct: 0
-    },
-    {
-        question: "What is overfitting in machine learning?",
-        answers: ["Model fits training data too well", "Model doesn't learn enough", "Fast convergence", "Too many features"],
-        correct: 0
-    },
-    {
-        question: "Which data structure uses LIFO principle?",
-        answers: ["Queue", "Stack", "Binary Tree", "Linked List"],
-        correct: 1
-    },
-    {
-        question: "What phase converts source code to intermediate code?",
-        answers: ["Lexical analysis", "Syntax analysis", "Semantic analysis", "Intermediate code generation"],
-        correct: 3
-    },
-    {
-        question: "What is polymorphism in OOP?",
-        answers: ["Same interface for different types", "Data encapsulation", "Multiple inheritance", "Operator overloading"],
-        correct: 0
-    },
-    {
-        question: "What does Big O notation represent?",
-        answers: ["Average case", "Best case", "Worst case", "Space complexity"],
-        correct: 2
-    },
-    {
-        question: "Which protocol ensures data confidentiality online?",
-        answers: ["HTTP", "FTP", "HTTPS", "SMTP"],
-        correct: 2
-    },
-    {
-        question: "What does ACID guarantee in databases?",
-        answers: ["Atomicity, Consistency, Isolation, Durability", "Authentication, Confidentiality, Integrity, Availability", "Access, Control, Indexing, Deployment", "Analysis, Conception, Implementation, Development"],
-        correct: 0
-    },
-    {
-        question: "What is an AVL tree?",
-        answers: ["Height-balanced BST", "Binary tree with max 2 children", "Tree for sorting", "Decision tree"],
-        correct: 0
-    },
-    {
-        question: "What does a load balancer do?",
-        answers: ["Distributes traffic", "Filters packets", "Caches requests", "Encrypts data"],
-        correct: 0
-    },
-    {
-        question: "Difference between TCP and UDP?",
-        answers: ["TCP faster, UDP reliable", "TCP connection-oriented, UDP connectionless", "UDP guarantees order", "UDP for web browsing"],
-        correct: 1
-    },
-    {
-        question: "What is functional programming?",
-        answers: ["Object and class based", "Pure functions and immutability", "Parallel processes", "Logic rules"],
-        correct: 1
-    },
-    {
-        question: "What is a zero-day vulnerability?",
-        answers: ["Known and patched", "Critical in new software", "Unknown to vendor, no patch", "Affects old systems"],
-        correct: 2
-    },
-    {
-        question: "Which consensus algorithm does Bitcoin use?",
-        answers: ["Proof of Stake", "Proof of Work", "Byzantine Fault Tolerance", "Raft"],
-        correct: 1
-    },
-    {
-        question: "What is MVC pattern?",
-        answers: ["Model-View-Controller separation", "Module-View-Component", "Main-View-Controller", "Model-View-Container"],
-        correct: 0
-    },
-    {
-        question: "What is virtualization?",
-        answers: ["Multiple OS on one hardware", "Virtual applications", "Network simulation", "Memory optimization"],
-        correct: 0
-    },
-    {
-        question: "What does NP-complete mean?",
-        answers: ["Solvable in polynomial time", "Solution verifiable in polynomial time", "Impossible to solve", "Logarithmic time solvable"],
-        correct: 1
-    },
-    {
-        question: "What is microservice architecture?",
-        answers: ["Modular monolith", "Small independent services", "Traditional client-server", "Macro services"],
-        correct: 1
-    }
+    // ... (include all your other quiz questions)
 ];
 
 // Dares & Advantages Database
 const daresList = [
     "Stand up and do the chicken dance for 15 seconds",
-    "Go to the front of class and take a dramatic bow like you just finished a Broadway show",
-    "Ask the teacher 'Is this going to be on the test?' in your most serious voice",
-    "Do 10 star jumps while whispering 'I'm a shining star'",
-    "Walk to the trash can and back using only tiptoes like a ballet dancer",
-    "Sing the ABC song backwards (or attempt to!)",
-    "Ask to borrow a pen from someone 3 rows away using only hand gestures",
-    "Do your best impression of the teacher's walking style",
-    "Pretend to be a statue until someone laughs",
-    "Write 'I ❤ homework' on a piece of paper and hold it up for 10 seconds"
+    // ... (include all your other dares)
+];
+
+const advantagesList = [
+    "You get to make the teacher tell a joke to the class",
+    // ... (include all your other advantages)
 ];
 
 // Quiz Functionality
@@ -306,25 +232,31 @@ function goBackToDaresHome() {
 
 // Event Listeners for all tools
 function initializeEventListeners() {
+    console.log('🔗 Initializing event listeners...');
+    
     // Dice events
     if (rollDiceButton) {
         rollDiceButton.addEventListener('click', rollDice);
+        console.log('✅ Dice button listener attached');
     }
     if (diceElement) {
         diceElement.addEventListener('click', rollDice);
     }
     
-    // Coin events
+    // Coin events - MAKE SURE THESE ARE INCLUDED
     if (flipCoinButton) {
         flipCoinButton.addEventListener('click', flipCoin);
+        console.log('✅ Coin button listener attached');
     }
     if (coinElement) {
         coinElement.addEventListener('click', flipCoin);
+        console.log('✅ Coin element listener attached');
     }
     
     // Quiz events
     if (getQuizButton) {
         getQuizButton.addEventListener('click', getRandomQuiz);
+        console.log('✅ Quiz button listener attached');
     }
     if (backButton) {
         backButton.addEventListener('click', goBackToHome);
@@ -340,21 +272,16 @@ function initializeEventListeners() {
     if (backButtonDares) {
         backButtonDares.addEventListener('click', goBackToDaresHome);
     }
+    
+    console.log('🎉 All event listeners initialized');
 }
 
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM fully loaded, initializing app...');
     initializeEventListeners();
     goBackToHome(); // Initialize quiz screen
     goBackToDaresHome(); // Initialize dares screen
-    
-    // Debug info
-    console.log('🎲 Random Tools App Loaded Successfully!');
-    console.log('- Dice elements:', !!diceElement, !!rollDiceButton);
-    console.log('- Coin elements:', !!coinElement, !!flipCoinButton);
-    console.log('- Quiz elements:', !!getQuizButton, !!backButton);
-    console.log('- Dares elements:', !!getDareButton, !!getRandomButton);
-    console.log('- Dares count:', daresList.length);
 });
 
 // PWA Service Worker Registration
