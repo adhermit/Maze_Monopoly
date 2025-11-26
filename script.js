@@ -1,9 +1,23 @@
+// DOM Elements
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+// Dice Elements
+const diceElement = document.getElementById('diceElement');
+const rollDiceButton = document.getElementById('rollDice');
+const diceResult = document.getElementById('diceResult');
+const diceHistory = document.getElementById('diceHistory');
+
+// Coin Elements
+const coinElement = document.getElementById('coinElement');
+const flipCoinButton = document.getElementById('flipCoin');
+const coinResult = document.getElementById('coinResult');
+const coinHistory = document.getElementById('coinHistory');
+
 // Quiz Elements
 const getQuizButton = document.getElementById('getQuiz');
 const quizContainer = document.getElementById('quizContainer');
 const quizQuestion = document.getElementById('quizQuestion');
-const quizAnswers = document.getElementById('quizAnswers');
-const quizResult = document.getElementById('quizResult');
 const backButton = document.getElementById('backButton');
 
 // Computer Science Quiz Questions (Bac+4 Level - English)
@@ -125,43 +139,11 @@ function getRandomQuiz() {
 
 function displayQuiz(quiz) {
     quizQuestion.textContent = quiz.question;
-    quizAnswers.innerHTML = '';
-    quizResult.textContent = '';
-    quizResult.className = 'quiz-result';
-    
-    quiz.answers.forEach((answer, index) => {
-        const answerElement = document.createElement('div');
-        answerElement.className = 'quiz-answer';
-        answerElement.textContent = answer;
-        answerElement.addEventListener('click', () => checkAnswer(index, quiz.correct));
-        quizAnswers.appendChild(answerElement);
-    });
-}
-
-function checkAnswer(selectedIndex, correctIndex) {
-    const answerElements = document.querySelectorAll('.quiz-answer');
-    const isCorrect = selectedIndex === correctIndex;
-    
-    answerElements.forEach((element, index) => {
-        element.style.pointerEvents = 'none';
-        
-        if (index === correctIndex) {
-            element.classList.add('correct');
-        } else if (index === selectedIndex && !isCorrect) {
-            element.classList.add('incorrect');
-        }
-    });
-    
-    quizResult.textContent = isCorrect ? '✅ Correct!' : '❌ Incorrect!';
-    quizResult.className = `quiz-result ${isCorrect ? 'correct' : 'incorrect'}`;
 }
 
 function goBackToHome() {
     // Reset quiz state
     quizQuestion.textContent = 'Click "Filter Random Quiz" to get a random computer science question!';
-    quizAnswers.innerHTML = '';
-    quizResult.textContent = '';
-    quizResult.className = 'quiz-result';
     
     // Show filter button and hide back button
     getQuizButton.style.display = 'block';
