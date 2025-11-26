@@ -20,6 +20,77 @@ const quizContainer = document.getElementById('quizContainer');
 const quizQuestion = document.getElementById('quizQuestion');
 const backButton = document.getElementById('backButton');
 
+// State
+let diceRolls = [];
+let coinFlips = [];
+
+// Tab Switching
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        
+        // Update buttons
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Update content
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+    });
+});
+
+// Dice Roller Functionality
+function rollDice() {
+    // Add rolling animation
+    diceElement.classList.add('rolling');
+    diceResult.textContent = '';
+    
+    setTimeout(() => {
+        const roll = Math.floor(Math.random() * 6) + 1;
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        
+        diceElement.innerHTML = `<div class="face">${diceFaces[roll - 1]}</div>`;
+        diceElement.classList.remove('rolling');
+        
+        diceResult.textContent = `You rolled a ${roll}!`;
+        diceRolls.push(roll);
+        updateDiceHistory();
+    }, 500);
+}
+
+function updateDiceHistory() {
+    if (diceRolls.length > 0) {
+        const lastFive = diceRolls.slice(-5);
+        diceHistory.textContent = `Recent rolls: ${lastFive.join(', ')}`;
+    }
+}
+
+// Coin Flip Functionality
+function flipCoin() {
+    coinElement.classList.add('flipping');
+    coinResult.textContent = '';
+    
+    setTimeout(() => {
+        const isHeads = Math.random() < 0.5;
+        const result = isHeads ? 'Heads' : 'Tails';
+        
+        // Rotate coin to show correct side
+        coinElement.style.transform = isHeads ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        coinElement.classList.remove('flipping');
+        
+        coinResult.textContent = `It's ${result}!`;
+        coinFlips.push(result);
+        updateCoinHistory();
+    }, 600);
+}
+
+function updateCoinHistory() {
+    if (coinFlips.length > 0) {
+        const lastFive = coinFlips.slice(-5);
+        coinHistory.textContent = `Recent flips: ${lastFive.join(', ')}`;
+    }
+}
+
 // Computer Science Quiz Questions (Bac+4 Level - English)
 const computerScienceQuiz = [
     {
@@ -150,9 +221,50 @@ function goBackToHome() {
     backButton.style.display = 'none';
 }
 
-// Event Listeners
-getQuizButton.addEventListener('click', getRandomQuiz);
-backButton.addEventListener('click', goBackToHome);
+// Event Listeners for all tools
+function initializeEventListeners() {
+    // Dice events
+    if (rollDiceButton) {
+        rollDiceButton.addEventListener('click', rollDice);
+    }
+    if (diceElement) {
+        diceElement.addEventListener('click', rollDice);
+    }
+    
+    // Coin events
+    if (flipCoinButton) {
+        flipCoinButton.addEventListener('click', flipCoin);
+    }
+    if (coinElement) {
+        coinElement.addEventListener('click', flipCoin);
+    }
+    
+    // Quiz events
+    if (getQuizButton) {
+        getQuizButton.addEventListener('click', getRandomQuiz);
+    }
+    if (backButton) {
+        backButton.addEventListener('click', goBackToHome);
+    }
+}
 
-// Initialize quiz screen
-goBackToHome();
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeEventListeners();
+    goBackToHome(); // Initialize quiz screen
+    
+    // Debug info
+    console.log('🎲 Random Tools App Loaded Successfully!');
+    console.log('- Dice elements:', !!diceElement, !!rollDiceButton);
+    console.log('- Coin elements:', !!coinElement, !!flipCoinButton);
+    console.log('- Quiz elements:', !!getQuizButton, !!backButton);
+});
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+    });
+}
