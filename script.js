@@ -201,6 +201,7 @@ const computerScienceQuiz = [
     }
 ];
 
+// Dares & Advantages Database
 const daresList = [
     "Stand up and do the chicken dance for 15 seconds",
     "Go to the front of class and take a dramatic bow like you just finished a Broadway show",
@@ -254,6 +255,55 @@ function getRandomDare() {
     displayDare(dare);
 }
 
+function getRandomFilter() {
+    // Hide the main buttons and show back button
+    getDareButton.style.display = 'none';
+    getRandomButton.style.display = 'none';
+    backButtonDares.style.display = 'block';
+    
+    // Randomly choose between quiz question or dare/advantage
+    const randomChoice = Math.random();
+    
+    if (randomChoice < 0.5) {
+        // Show a random quiz question
+        const randomQuizIndex = Math.floor(Math.random() * computerScienceQuiz.length);
+        const quiz = computerScienceQuiz[randomQuizIndex];
+        displayQuizInDares(quiz.question);
+    } else if (randomChoice < 0.75) {
+        // Show a random dare
+        const randomDareIndex = Math.floor(Math.random() * daresList.length);
+        const dare = daresList[randomDareIndex];
+        displayDare(dare);
+    } else {
+        // Show a random advantage
+        const randomAdvantageIndex = Math.floor(Math.random() * advantagesList.length);
+        const advantage = advantagesList[randomAdvantageIndex];
+        displayAdvantage(advantage);
+    }
+}
+
+function displayDare(dare) {
+    daresContent.innerHTML = `<div class="dare-item">${dare}</div>`;
+}
+
+function displayAdvantage(advantage) {
+    daresContent.innerHTML = `<div class="advantage-item">${advantage}</div>`;
+}
+
+function displayQuizInDares(question) {
+    daresContent.innerHTML = `<div class="quiz-question">${question}</div>`;
+}
+
+function goBackToDaresHome() {
+    // Reset dares state
+    daresContent.innerHTML = 'Click "Get Dare" for dares or "Random Filter" for random quiz/dares!';
+    
+    // Show main buttons and hide back button
+    getDareButton.style.display = 'block';
+    getRandomButton.style.display = 'block';
+    backButtonDares.style.display = 'none';
+}
+
 // Event Listeners for all tools
 function initializeEventListeners() {
     // Dice events
@@ -279,18 +329,32 @@ function initializeEventListeners() {
     if (backButton) {
         backButton.addEventListener('click', goBackToHome);
     }
+    
+    // Dares events
+    if (getDareButton) {
+        getDareButton.addEventListener('click', getRandomDare);
+    }
+    if (getRandomButton) {
+        getRandomButton.addEventListener('click', getRandomFilter);
+    }
+    if (backButtonDares) {
+        backButtonDares.addEventListener('click', goBackToDaresHome);
+    }
 }
 
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
     goBackToHome(); // Initialize quiz screen
+    goBackToDaresHome(); // Initialize dares screen
     
     // Debug info
     console.log('🎲 Random Tools App Loaded Successfully!');
     console.log('- Dice elements:', !!diceElement, !!rollDiceButton);
     console.log('- Coin elements:', !!coinElement, !!flipCoinButton);
     console.log('- Quiz elements:', !!getQuizButton, !!backButton);
+    console.log('- Dares elements:', !!getDareButton, !!getRandomButton);
+    console.log('- Dares count:', daresList.length);
 });
 
 // PWA Service Worker Registration
