@@ -17,7 +17,7 @@ const getQuizButton = document.getElementById('getQuiz');
 const quizQuestion = document.getElementById('quizQuestion');
 const quizAnswer = document.getElementById('quizAnswer');
 const showAnswerButton = document.getElementById('showAnswer');
-const nextQuestionButton = document.getElementById('nextQuestion');
+const nextQuestionButton = document.getElementById('nextQuestion'); // Make sure this exists in HTML
 const quizActions = document.querySelector('.quiz-actions');
 const backButtonQuiz = document.getElementById('backButtonQuiz');
 
@@ -151,32 +151,32 @@ const daresList = [
 let currentQuestionIndex = -1;
 let answerRevealed = false;
 
-// QUIZ FUNCTIONALITY
+// QUIZ FUNCTIONALITY - COMPLETELY FIXED
 function getRandomQuiz() {
     // Hide the filter button and show back button
     getQuizButton.style.display = 'none';
     backButtonQuiz.style.display = 'block';
     quizActions.style.display = 'flex';
     
-    // Get a random question
-    const randomIndex = Math.floor(Math.random() * computerScienceQuiz.length);
-    const question = computerScienceQuiz[randomIndex];
-
+    // Get a random question and store the index
+    currentQuestionIndex = Math.floor(Math.random() * computerScienceQuiz.length);
+    const questionData = computerScienceQuiz[currentQuestionIndex];
+    
     // Display question and reset answer state
     quizQuestion.textContent = questionData.question;
     quizAnswer.style.display = 'none';
     quizAnswer.textContent = '';
     showAnswerButton.textContent = 'Show Answer';
     showAnswerButton.classList.remove('revealed');
+    showAnswerButton.disabled = false;
     answerRevealed = false;
     
-    // Enable show answer button
-    showAnswerButton.disabled = false;
-    
-    quizQuestion.textContent = question;
+    console.log('Loaded question:', questionData.question); // Debug
 }
 
 function showAnswer() {
+    console.log('Show Answer clicked. Current index:', currentQuestionIndex, 'Answer revealed:', answerRevealed); // Debug
+    
     if (!answerRevealed && currentQuestionIndex !== -1) {
         const questionData = computerScienceQuiz[currentQuestionIndex];
         quizAnswer.textContent = questionData.answer;
@@ -185,16 +185,29 @@ function showAnswer() {
         showAnswerButton.classList.add('revealed');
         showAnswerButton.disabled = true;
         answerRevealed = true;
+        
+        console.log('Answer shown:', questionData.answer); // Debug
+    } else {
+        console.log('Cannot show answer'); // Debug
     }
+}
+
+function nextQuestion() {
+    getRandomQuiz();
 }
 
 function goBackToQuizHome() {
     // Reset quiz state
-    quizQuestion.textContent = 'Click "Filter Random Quiz" to get a random computer science question!';
+    quizQuestion.textContent = 'Click "Get Random Quiz" to get a random computer science question!';
+    quizAnswer.style.display = 'none';
+    quizActions.style.display = 'none';
     
     // Show filter button and hide back button
     getQuizButton.style.display = 'block';
     backButtonQuiz.style.display = 'none';
+    
+    currentQuestionIndex = -1;
+    answerRevealed = false;
 }
 
 // DARES FUNCTIONALITY
@@ -214,14 +227,14 @@ function getRandomDare() {
 
 function goBackToDareHome() {
     // Reset dare state
-    dareQuestion.textContent = 'Click "Filter Dare" to get a random dare!';
+    dareQuestion.textContent = 'Click "Get Random Dare" to get a random dare!';
     
     // Show filter button and hide back button
     getDareButton.style.display = 'block';
     backButtonDare.style.display = 'none';
 }
 
-// MYSTERY FUNCTIONALITY
+// MYSTERY FUNCTIONALITY - FIXED
 function getRandomMystery() {
     console.log("Mystery button clicked!");
     
@@ -233,9 +246,9 @@ function getRandomMystery() {
     const isQuiz = Math.random() < 0.5;
     
     if (isQuiz) {
-        // Show a random quiz question
+        // Show a random quiz question - FIXED: access .question property
         const randomQuizIndex = Math.floor(Math.random() * computerScienceQuiz.length);
-        const question = computerScienceQuiz[randomQuizIndex];
+        const question = computerScienceQuiz[randomQuizIndex].question;
         mysteryQuestion.textContent = `QUIZ: ${question}`;
     } else {
         // Show a random dare
@@ -254,7 +267,7 @@ function goBackToMysteryHome() {
     backButtonMystery.style.display = 'none';
 }
 
-// EVENT LISTENERS
+// EVENT LISTENERS - ADDED NEXT QUESTION
 rollDiceButton.addEventListener('click', rollDice);
 diceElement.addEventListener('click', rollDice);
 
@@ -263,6 +276,9 @@ coinElement.addEventListener('click', flipCoin);
 
 getQuizButton.addEventListener('click', getRandomQuiz);
 showAnswerButton.addEventListener('click', showAnswer);
+if (nextQuestionButton) {
+    nextQuestionButton.addEventListener('click', nextQuestion);
+}
 backButtonQuiz.addEventListener('click', goBackToQuizHome);
 
 getDareButton.addEventListener('click', getRandomDare);
