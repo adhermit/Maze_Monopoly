@@ -22,7 +22,7 @@
             <button class="tab-button" data-tab="coin">Coin Flip</button>
             <button class="tab-button" data-tab="quiz">Random Quiz</button>
             <button class="tab-button" data-tab="dares">Dares</button>
-            <button class="tab-button" data-tab="mistry">Mystery</button>
+            <button class="tab-button" data-tab="mystery">Mystery</button>
         </div>
 
         <!-- Dice Roller Section -->
@@ -44,6 +44,7 @@
                     <div class="side tails">TAILS</div>
                 </div>
                 <button id="flipCoin" class="action-button">Flip Coin</button>
+                <div class="result" id="coinResult"></div>
             </div>
         </section>
 
@@ -51,7 +52,7 @@
         <section id="quiz" class="tab-content">
             <div class="tool-container">
                 <button id="getQuiz" class="action-button">Filter Random Quiz</button>
-                <button id="backButton" class="back-button" style="display: none;">← Back to Home</button>
+                <button id="backButtonQuiz" class="back-button" style="display: none;">← Back to Home</button>
                 
                 <div id="quizContainer" class="quiz-container">
                     <div id="quizQuestion" class="quiz-question">
@@ -65,25 +66,25 @@
         <section id="dares" class="tab-content">
             <div class="tool-container">
                 <button id="getDare" class="action-button">Filter Dare</button>
-                <button id="backButton" class="back-button" style="display: none;">← Back to Home</button>
+                <button id="backButtonDare" class="back-button" style="display: none;">← Back to Home</button>
                 
                 <div id="dareContainer" class="quiz-container">
                     <div id="dareQuestion" class="quiz-question">
-                        Click "Filter dare" to get a random dare!
+                        Click "Filter Dare" to get a random dare!
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Mistry Section -->
-        <section id="mistry" class="tab-content">
+        <!-- Mystery Section -->
+        <section id="mystery" class="tab-content">
             <div class="tool-container">
-                <button id="getMistry" class="action-button">?</button>
-                <button id="backButton" class="back-button" style="display: none;">← Back to Home</button>
+                <button id="getMystery" class="action-button">?</button>
+                <button id="backButtonMystery" class="back-button" style="display: none;">← Back to Home</button>
                 
-                <div id="mistryContainer" class="quiz-container">
-                    <div id="mistryQuestion" class="quiz-question">
-                        Click "?" when you reach '?' box to get a mistry question!
+                <div id="mysteryContainer" class="quiz-container">
+                    <div id="mysteryQuestion" class="quiz-question">
+                        Click "?" when you reach '?' box to get a mystery question!
                     </div>
                 </div>
             </div>

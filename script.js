@@ -22,10 +22,10 @@ const getDareButton = document.getElementById('getDare');
 const dareQuestion = document.getElementById('dareQuestion');
 const backButtonDare = document.getElementById('backButtonDare');
 
-// Mistry Elements
-const getMistryButton = document.getElementById('getMistry');
-const mistryQuestion = document.getElementById('mistryQuestion');
-const backButtonMistry = document.getElementById('backButtonMistry');
+// Mystery Elements
+const getMysteryButton = document.getElementById('getMystery');
+const mysteryQuestion = document.getElementById('mysteryQuestion');
+const backButtonMystery = document.getElementById('backButtonMystery');
 
 // Tab Switching
 tabButtons.forEach(button => {
@@ -105,7 +105,7 @@ const daresList = [
     "Write 'I ❤ homework' and hold it up for 10 seconds"
 ];
 
-// QUIZ FUNCTIONALITY - WORKING
+// QUIZ FUNCTIONALITY
 function getRandomQuiz() {
     // Hide the filter button and show back button
     getQuizButton.style.display = 'none';
@@ -127,7 +127,7 @@ function goBackToQuizHome() {
     backButtonQuiz.style.display = 'none';
 }
 
-// DARES FUNCTIONALITY - FIXED
+// DARES FUNCTIONALITY
 function getRandomDare() {
     console.log("Dare button clicked!");
     
@@ -151,13 +151,13 @@ function goBackToDareHome() {
     backButtonDare.style.display = 'none';
 }
 
-// MYSTERY FUNCTIONALITY - FIXED
+// MYSTERY FUNCTIONALITY
 function getRandomMystery() {
     console.log("Mystery button clicked!");
     
     // Hide the filter button and show back button
-    getMistryButton.style.display = 'none';
-    backButtonMistry.style.display = 'block';
+    getMysteryButton.style.display = 'none';
+    backButtonMystery.style.display = 'block';
     
     // Randomly choose between quiz question or dare (50/50 chance)
     const isQuiz = Math.random() < 0.5;
@@ -166,25 +166,25 @@ function getRandomMystery() {
         // Show a random quiz question
         const randomQuizIndex = Math.floor(Math.random() * computerScienceQuiz.length);
         const question = computerScienceQuiz[randomQuizIndex];
-        mistryQuestion.textContent = `QUIZ: ${question}`;
+        mysteryQuestion.textContent = `QUIZ: ${question}`;
     } else {
         // Show a random dare
         const randomDareIndex = Math.floor(Math.random() * daresList.length);
         const dare = daresList[randomDareIndex];
-        mistryQuestion.textContent = `DARE: ${dare}`;
+        mysteryQuestion.textContent = `DARE: ${dare}`;
     }
 }
 
 function goBackToMysteryHome() {
     // Reset mystery state
-    mistryQuestion.textContent = 'Click "?" when you reach the mystery box to get a random quiz or dare!';
+    mysteryQuestion.textContent = 'Click "?" when you reach the mystery box to get a random quiz or dare!';
     
     // Show filter button and hide back button
-    getMistryButton.style.display = 'block';
-    backButtonMistry.style.display = 'none';
+    getMysteryButton.style.display = 'block';
+    backButtonMystery.style.display = 'none';
 }
 
-// EVENT LISTENERS - SIMPLE AND DIRECT
+// EVENT LISTENERS
 rollDiceButton.addEventListener('click', rollDice);
 diceElement.addEventListener('click', rollDice);
 
@@ -197,9 +197,7 @@ backButtonQuiz.addEventListener('click', goBackToQuizHome);
 getDareButton.addEventListener('click', getRandomDare);
 backButtonDare.addEventListener('click', goBackToDareHome);
 
-getMistryButton.addEventListener('click', getRandomMystery);
-backButtonMistry.addEventListener('click', goBackToMysteryHome);
+getMysteryButton.addEventListener('click', getRandomMystery);
+backButtonMystery.addEventListener('click', goBackToMysteryHome);
 
 console.log('🎲 Maze Monopoly App Loaded Successfully!');
-console.log('Dares button:', getDareButton);
-console.log('Mystery button:', getMistryButton);
