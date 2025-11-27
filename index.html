@@ -10,6 +10,58 @@
     <meta name="theme-color" content="#4f46e5">
 </head>
 <body>
+    <!-- Level Selection Screen -->
+    <div id="levelSelection" class="level-selection active">
+        <div class="level-container">
+            <div class="level-header">
+                <h1>🎲 Maze Monopoly 🪙</h1>
+                <p>Choose Your Difficulty Level</p>
+            </div>
+            
+            <div class="level-cards">
+                <div class="level-card" data-level="easy">
+                    <div class="level-icon">😊</div>
+                    <h3>Easy</h3>
+                    <p>Perfect for beginners</p>
+                    <ul>
+                        <li>Simple questions</li>
+                        <li>Easy dares</li>
+                        <li>Relaxed gameplay</li>
+                    </ul>
+                    <button class="level-select-btn" data-level="easy">Select Easy</button>
+                </div>
+                
+                <div class="level-card" data-level="medium">
+                    <div class="level-icon">😎</div>
+                    <h3>Medium</h3>
+                    <p>For regular players</p>
+                    <ul>
+                        <li>Moderate questions</li>
+                        <li>Fun challenges</li>
+                        <li>Balanced difficulty</li>
+                    </ul>
+                    <button class="level-select-btn" data-level="medium">Select Medium</button>
+                </div>
+                
+                <div class="level-card" data-level="hard">
+                    <div class="level-icon">🔥</div>
+                    <h3>Hard</h3>
+                    <p>For experts only!</p>
+                    <ul>
+                        <li>Advanced questions</li>
+                        <li>Challenging dares</li>
+                        <li>Expert mode</li>
+                    </ul>
+                    <button class="level-select-btn" data-level="hard">Select Hard</button>
+                </div>
+            </div>
+            
+            <div class="level-footer">
+                <p>Choose wisely! You can't change the level during the game.</p>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
         <header>
             <h1>🎲 Maze Monopoly 🪙</h1>
