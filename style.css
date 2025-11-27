@@ -426,6 +426,25 @@ header p {
     box-shadow: 0 4px 15px rgba(100, 116, 139, 0.4);
 }
 
+/* Mystery Answer Styles */
+.mystery-actions {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#mysteryAnswer {
+    background: #f0f9ff;
+    border: 2px solid #0ea5e9;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #0369a1;
+    box-shadow: 0 4px 6px rgba(14, 165, 233, 0.1);
+    animation: fadeIn 0.5s ease-in;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -478,6 +497,7 @@ header p {
         font-size: 1.1rem;
         padding: 1rem;
     }
+    
 }
 
 @media (max-width: 480px) {
@@ -533,6 +553,16 @@ header p {
     }
     
     .quiz-answer {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .mystery-actions .action-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    #mysteryAnswer {
         padding: 1rem;
         font-size: 1rem;
     }
