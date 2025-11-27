@@ -1,3 +1,13 @@
+// Level Selection Elements
+const levelSelection = document.getElementById('levelSelection');
+const mainGame = document.getElementById('mainGame');
+const levelSelectButtons = document.querySelectorAll('.level-select-btn');
+const currentLevelSpan = document.getElementById('currentLevel');
+const changeLevelButton = document.getElementById('changeLevel');
+
+// Game State
+let currentLevel = 'easy';
+
 // DOM Elements
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabContents = document.querySelectorAll('.tab-content');
@@ -33,6 +43,67 @@ const mysteryAnswer = document.getElementById('mysteryAnswer'); // Add this to H
 const showMysteryAnswerButton = document.getElementById('showMysteryAnswer'); // Add this to HTML
 const mysteryActions = document.querySelector('.mystery-actions'); 
 const backButtonMystery = document.getElementById('backButtonMystery');
+
+// LEVEL SELECTION FUNCTIONALITY
+function selectLevel(level) {
+    currentLevel = level;
+    
+    // Update visual selection
+    document.querySelectorAll('.level-card').forEach(card => {
+        card.classList.remove('easy-selected', 'medium-selected', 'hard-selected');
+    });
+    
+    const selectedCard = document.querySelector(`[data-level="${level}"]`);
+    selectedCard.classList.add(`${level}-selected`);
+    
+    // Update level indicator
+    const levelNames = {
+        easy: 'Easy',
+        medium: 'Medium', 
+        hard: 'Hard'
+    };
+    currentLevelSpan.textContent = `Level: ${levelNames[level]}`;
+    
+    console.log(`Level selected: ${level}`);
+}
+
+function startGame() {
+    // Add fade-out animation
+    levelSelection.classList.add('fade-out');
+    
+    setTimeout(() => {
+        levelSelection.style.display = 'none';
+        mainGame.style.display = 'block';
+        
+        // Initialize game with selected level
+        initializeGameWithLevel();
+    }, 500);
+}
+
+function showLevelSelection() {
+    mainGame.style.display = 'none';
+    levelSelection.style.display = 'flex';
+    levelSelection.classList.remove('fade-out');
+}
+
+function initializeGameWithLevel() {
+    console.log(`Initializing game with level: ${currentLevel}`);
+    // You can add level-specific logic here
+    // For example, different question sets, difficulty modifiers, etc.
+}
+
+// Level Selection Event Listeners
+levelSelectButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const level = e.target.getAttribute('data-level');
+        selectLevel(level);
+        
+        // Auto-start game after selection
+        setTimeout(startGame, 300);
+    });
+});
+
+changeLevelButton.addEventListener('click', showLevelSelection);
 
 // Tab Switching
 tabButtons.forEach(button => {
