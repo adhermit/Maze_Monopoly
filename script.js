@@ -147,7 +147,12 @@ const daresList = [
     "Ask to borrow a pen using only hand gestures",
     "Do your best impression of the teacher's walking style",
     "Pretend to be a statue until someone laughs",
-    "Write 'I ❤ homework' and hold it up for 10 seconds"
+    "Write 'I ❤ homework' and hold it up for 10 seconds",
+    "Tell truth: What’s the most embarrassing thing you’ve done in school?",
+    "Tell truth: What is a secret you’ve never told anyone before?",
+    "Tell truth: What’s one thing you’re too shy to admit?",
+    "Tell truth: Who in the group is the most dramatic?",
+    "Tell tuth: If you had to roast yourself, what would you say?",
 ];
 
 // Quiz State
