@@ -497,6 +497,173 @@ header p {
         font-size: 1.1rem;
         padding: 1rem;
     }
+    /* Level Selection Styles */
+.level-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.level-selection:not(.active) {
+    display: none;
+}
+
+.level-container {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.level-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #4f46e5;
+}
+
+.level-header p {
+    font-size: 1.2rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.level-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.level-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+    border-color: #4f46e5;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+}
+
+.level-card.easy-selected {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.level-card.medium-selected {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.level-card.hard-selected {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.level-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.level-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.level-card p {
+    color: #64748b;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.level-card ul {
+    text-align: left;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.level-card li {
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.level-select-btn {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.level-select-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+}
+
+.level-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+/* Level Indicator in Header */
+.level-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+#currentLevel {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.change-level-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.change-level-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
     
 }
 
@@ -566,4 +733,33 @@ header p {
         padding: 1rem;
         font-size: 1rem;
     }
+
+    .level-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .level-header h1 {
+        font-size: 2rem;
+    }
+    
+    .level-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .level-indicator {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+}
+
+/* Animation for level selection */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.level-selection.fade-out {
+    animation: fadeOut 0.5s ease forwards;
 }
