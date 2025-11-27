@@ -62,10 +62,16 @@
         </div>
     </div>
     
-    <div class="container">
+    <!-- Main Game Container (Hidden initially) -->
+    <div class="container" id="mainGame" style="display: none;">
         <header>
             <h1>🎲 Maze Monopoly 🪙</h1>
             <p>Dice Roller, Coin Flipper & Random Quiz</p>
+            <!-- Add level indicator -->
+            <div class="level-indicator">
+                <span id="currentLevel">Level: Easy</span>
+                <button id="changeLevel" class="change-level-btn">Change Level</button>
+            </div>
         </header>
 
         <!-- Navigation Tabs -->
@@ -103,12 +109,12 @@
         <!-- Quiz Section -->
         <section id="quiz" class="tab-content">
             <div class="tool-container">
-                <button id="getQuiz" class="action-button">Filter Random Quiz</button>
+                <button id="getQuiz" class="action-button">Get Random Quiz</button>
                 <button id="backButtonQuiz" class="back-button" style="display: none;">← Back to Home</button>
                 
                 <div id="quizContainer" class="quiz-container">
                     <div id="quizQuestion" class="quiz-question">
-                        Click "Filter Random Quiz" to get a random computer science question!
+                        Click "Get Random Quiz" to get a random computer science question!
                     </div>
                     <div id="quizAnswer" class="quiz-answer" style="display: none;"></div>
                     <div class="quiz-actions" style="display: none;">
@@ -121,12 +127,12 @@
         <!-- Dares section -->
         <section id="dares" class="tab-content">
             <div class="tool-container">
-                <button id="getDare" class="action-button">Filter Dare</button>
+                <button id="getDare" class="action-button">Get Random Dare</button>
                 <button id="backButtonDare" class="back-button" style="display: none;">← Back to Home</button>
                 
                 <div id="dareContainer" class="quiz-container">
                     <div id="dareQuestion" class="quiz-question">
-                        Click "Filter Dare" to get a random dare!
+                        Click "Get Random Dare" to get a random dare!
                     </div>
                 </div>
             </div>
@@ -142,10 +148,10 @@
                     <div id="mysteryQuestion" class="quiz-question">
                         Click "?" when you reach '?' box to get a mystery question!
                     </div>
-                     <div id="mysteryAnswer" class="quiz-answer" style="display: none;"></div>
-                        <div class="mystery-actions">
-                            <button id="showMysteryAnswer" class="action-button secondary" style="display: none;">Show Answer</button>
-                        </div>
+                    <div id="mysteryAnswer" class="quiz-answer" style="display: none;"></div>
+                    <div class="mystery-actions">
+                        <button id="showMysteryAnswer" class="action-button secondary" style="display: none;">Show Answer</button>
+                    </div>
                 </div>
             </div>
         </section>
