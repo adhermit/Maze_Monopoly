@@ -42,304 +42,14 @@ const mysteryAnswer = document.getElementById('mysteryAnswer');
 const showMysteryAnswerButton = document.getElementById('showMysteryAnswer');
 const backButtonMystery = document.getElementById('backButtonMystery');
 
-// Reset Function
-function resetGame() {
-    console.log('Resetting game...');
-    
-    // Reset all tabs to default state
-    resetQuizTab();
-    resetDaresTab();
-    resetMysteryTab();
-    resetDiceTab();
-    resetCoinTab();
-    
-    // Reset to first tab
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    tabContents.forEach(content => content.classList.remove('active'));
-    
-    document.querySelector('[data-tab="dice"]').classList.add('active');
-    document.getElementById('dice').classList.add('active');
-}
+// Quiz State
+let currentQuestionIndex = -1;
+let answerRevealed = false;
 
-function resetQuizTab() {
-    // Reset quiz state
-    quizQuestion.textContent = `Click "Get Random Quiz" to get a random ${currentLevel} computer science question!`;
-    quizAnswer.style.display = 'none';
-    quizAnswer.textContent = '';
-    quizActions.style.display = 'none';
-    getQuizButton.style.display = 'block';
-    backButtonQuiz.style.display = 'none';
-    currentQuestionIndex = -1;
-    answerRevealed = false;
-    
-    // Clear any quiz options
-    const quizOptions = document.querySelector('.quiz-options');
-    if (quizOptions) {
-        quizOptions.remove();
-    }
-}
-
-function resetDaresTab() {
-    // Reset dares state
-    dareQuestion.textContent = `Click "Get Random Dare" to get a random ${currentLevel} dare!`;
-    getDareButton.style.display = 'block';
-    backButtonDare.style.display = 'none';
-}
-
-function resetMysteryTab() {
-    // Reset mystery state
-    mysteryQuestion.textContent = 'Click "?" when you reach the mystery box to get a random quiz or dare!';
-    mysteryAnswer.style.display = 'none';
-    mysteryAnswer.textContent = '';
-    showMysteryAnswerButton.style.display = 'none';
-    getMysteryButton.style.display = 'block';
-    backButtonMystery.style.display = 'none';
-    currentMysteryQuizIndex = -1;
-    mysteryAnswerRevealed = false;
-    currentMysteryType = '';
-}
-
-function resetDiceTab() {
-    // Reset dice state
-    diceResult.textContent = '';
-    diceElement.innerHTML = '<div class="face">⚀</div>';
-    diceElement.classList.remove('rolling');
-}
-
-function resetCoinTab() {
-    // Reset coin state
-    coinResult.textContent = '';
-    coinElement.style.transform = 'rotateY(0deg)';
-    coinElement.classList.remove('flipping');
-    
-    // Remove any quiz/dare time buttons
-    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
-    if (quizDareButton) {
-        quizDareButton.remove();
-    }
-}
-
-// LEVEL SELECTION FUNCTIONALITY
-function selectLevel(level) {
-    console.log('selectLevel called with:', level);
-    currentLevel = level;
-    
-    // Update visual selection
-    document.querySelectorAll('.level-card').forEach(card => {
-        card.classList.remove('easy-selected', 'medium-selected', 'hard-selected');
-    });
-    
-    const selectedCard = document.querySelector(`[data-level="${level}"]`);
-    if (selectedCard) {
-        selectedCard.classList.add(`${level}-selected`);
-    }
-    
-    // Update level indicator
-    const levelNames = {
-        easy: 'Easy',
-        medium: 'Medium', 
-        hard: 'Hard'
-    };
-    if (currentLevelSpan) {
-        currentLevelSpan.textContent = `Level: ${levelNames[level]}`;
-    }
-    
-    // Reset the game when level changes
-    resetGame();
-}
-
-function startGame() {
-    console.log('startGame called');
-    if (levelSelection && mainGame) {
-        // Add fade-out animation
-        levelSelection.classList.add('fade-out');
-        
-        setTimeout(() => {
-            levelSelection.style.display = 'none';
-            mainGame.style.display = 'block';
-            
-            // Initialize game with selected level
-            initializeGameWithLevel();
-        }, 500);
-    }
-}
-
-function showLevelSelection() {
-    console.log('showLevelSelection called');
-    if (mainGame && levelSelection) {
-        mainGame.style.display = 'none';
-        levelSelection.style.display = 'flex';
-        levelSelection.classList.remove('fade-out');
-        
-        // Reset game when going back to level selection
-        resetGame();
-    }
-}
-
-function initializeGameWithLevel() {
-    console.log(`Game initialized with level: ${currentLevel}`);
-    // Update content based on level
-    updateContentForLevel();
-}
-
-function updateContentForLevel() {
-    // Update all text content to reflect current level
-    quizQuestion.textContent = `Click "Get Random Quiz" to get a random ${currentLevel} computer science question!`;
-    dareQuestion.textContent = `Click "Get Random Dare" to get a random ${currentLevel} dare!`;
-    
-    // You can modify game behavior based on level
-    switch(currentLevel) {
-        case 'easy':
-            console.log('Easy mode activated');
-            break;
-        case 'medium':
-            console.log('Medium mode activated');
-            break;
-        case 'hard':
-            console.log('Hard mode activated');
-            break;
-    }
-}
-
-// Level Selection Event Listeners
-console.log('Setting up level selection listeners...');
-levelSelectButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        console.log('Level button clicked!');
-        const level = e.target.getAttribute('data-level');
-        console.log('Selected level:', level);
-        
-        if (level) {
-            selectLevel(level);
-            // Auto-start game after selection
-            setTimeout(startGame, 300);
-        }
-    });
-});
-
-if (changeLevelButton) {
-    changeLevelButton.addEventListener('click', showLevelSelection);
-}
-
-// Tab Switching
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const tabId = button.getAttribute('data-tab');
-        
-        // Update buttons
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        // Update content
-        tabContents.forEach(content => content.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-    });
-});
-
-// Dice Roller Functionality
-function rollDice() {
-    // Add rolling animation
-    diceElement.classList.add('rolling');
-    diceResult.textContent = '';
-    
-    setTimeout(() => {
-        const roll = Math.floor(Math.random() * 6) + 1;
-        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-        
-        diceElement.innerHTML = `<div class="face">${diceFaces[roll - 1]}</div>`;
-        diceElement.classList.remove('rolling');
-        
-        diceResult.textContent = `You rolled a ${roll}!`;
-    }, 500);
-}
-
-// COIN FLIP FUNCTIONALITY WITH QUIZ/DARE TIME
-function flipCoin() {
-    // Add flipping animation
-    coinElement.classList.add('flipping');
-    coinResult.textContent = '';
-    
-    // Remove any existing quiz/dare time buttons
-    const existingButton = document.querySelector('.quiz-dare-time-btn');
-    if (existingButton) {
-        existingButton.remove();
-    }
-    
-    setTimeout(() => {
-        const isHeads = Math.random() < 0.5;
-        const result = isHeads ? 'Heads' : 'Tails';
-        
-        // Rotate coin to show correct side
-        coinElement.style.transform = isHeads ? 'rotateY(0deg)' : 'rotateY(180deg)';
-        coinElement.classList.remove('flipping');
-        
-        coinResult.textContent = `It's ${result}!`;
-        
-        // Show Quiz Time or Dare Time button based on result
-        showQuizOrDareButton(isHeads);
-    }, 600);
-}
-
-function showQuizOrDareButton(isHeads) {
-    // Remove any existing button first
-    const existingButton = document.querySelector('.quiz-dare-time-btn');
-    if (existingButton) {
-        existingButton.remove();
-    }
-    
-    // Create the button
-    const button = document.createElement('button');
-    button.className = 'quiz-dare-time-btn action-button';
-    
-    if (isHeads) {
-        button.textContent = '🎯 Quiz Time!';
-        button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        button.addEventListener('click', showRandomQuizFromCoin);
-    } else {
-        button.textContent = '🎭 Dare Time!';
-        button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-        button.addEventListener('click', showRandomDareFromCoin);
-    }
-    
-    // Add the button after the coin result
-    coinResult.parentNode.insertBefore(button, coinResult.nextSibling);
-}
-
-function showRandomQuizFromCoin() {
-    // Switch to quiz tab
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    document.querySelector('[data-tab="quiz"]').classList.add('active');
-    
-    tabContents.forEach(content => content.classList.remove('active'));
-    document.getElementById('quiz').classList.add('active');
-    
-    // Get and display a random quiz
-    getRandomQuiz();
-    
-    // Remove the quiz/dare time button
-    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
-    if (quizDareButton) {
-        quizDareButton.remove();
-    }
-}
-
-function showRandomDareFromCoin() {
-    // Switch to dares tab
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    document.querySelector('[data-tab="dares"]').classList.add('active');
-    
-    tabContents.forEach(content => content.classList.remove('active'));
-    document.getElementById('dares').classList.add('active');
-    
-    // Get and display a random dare
-    getRandomDare();
-    
-    // Remove the quiz/dare time button
-    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
-    if (quizDareButton) {
-        quizDareButton.remove();
-    }
-}
+// Mystery State
+let currentMysteryQuizIndex = -1;
+let mysteryAnswerRevealed = false;
+let currentMysteryType = ''; // 'quiz' or 'dare'
 
 // Computer Science Quiz Questions - Level Based
 const computerScienceQuiz = {
@@ -613,14 +323,405 @@ const daresList = {
     ]
 };
 
-// Quiz State
-let currentQuestionIndex = -1;
-let answerRevealed = false;
+// Initialize the game
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    initializeGame();
+});
 
-// Mystery State
-let currentMysteryQuizIndex = -1;
-let mysteryAnswerRevealed = false;
-let currentMysteryType = ''; // 'quiz' or 'dare'
+function initializeGame() {
+    console.log('Initializing game...');
+    
+    // Set up level selection buttons
+    setupLevelSelection();
+    
+    // Set up tab functionality
+    setupTabs();
+    
+    // Set up game functionality
+    setupGameFunctions();
+    
+    // Show level selection screen initially
+    if (levelSelection && mainGame) {
+        levelSelection.style.display = 'flex';
+        mainGame.style.display = 'none';
+    }
+}
+
+function setupLevelSelection() {
+    console.log('Setting up level selection...');
+    console.log('Found level buttons:', levelSelectButtons.length);
+    
+    levelSelectButtons.forEach(button => {
+        console.log('Adding listener to button:', button);
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Level button clicked!');
+            
+            const level = this.getAttribute('data-level');
+            console.log('Selected level:', level);
+            
+            if (level) {
+                selectLevel(level);
+                // Auto-start game after selection
+                setTimeout(startGame, 300);
+            }
+        });
+    });
+
+    // Change level button
+    if (changeLevelButton) {
+        changeLevelButton.addEventListener('click', showLevelSelection);
+    }
+}
+
+function setupTabs() {
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Update buttons
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update content
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+}
+
+function setupGameFunctions() {
+    // Dice functionality
+    if (rollDiceButton) rollDiceButton.addEventListener('click', rollDice);
+    if (diceElement) diceElement.addEventListener('click', rollDice);
+    
+    // Coin functionality
+    if (flipCoinButton) flipCoinButton.addEventListener('click', flipCoin);
+    if (coinElement) coinElement.addEventListener('click', flipCoin);
+    
+    // Quiz functionality
+    if (getQuizButton) getQuizButton.addEventListener('click', getRandomQuiz);
+    if (showAnswerButton) showAnswerButton.addEventListener('click', showAnswer);
+    if (backButtonQuiz) backButtonQuiz.addEventListener('click', goBackToQuizHome);
+    
+    // Dares functionality
+    if (getDareButton) getDareButton.addEventListener('click', getRandomDare);
+    if (backButtonDare) backButtonDare.addEventListener('click', goBackToDareHome);
+    
+    // Mystery functionality
+    if (getMysteryButton) getMysteryButton.addEventListener('click', getRandomMystery);
+    if (showMysteryAnswerButton) showMysteryAnswerButton.addEventListener('click', showMysteryAnswer);
+    if (backButtonMystery) backButtonMystery.addEventListener('click', goBackToMysteryHome);
+}
+
+// LEVEL SELECTION FUNCTIONALITY
+function selectLevel(level) {
+    console.log('selectLevel called with:', level);
+    currentLevel = level;
+    
+    // Update visual selection
+    document.querySelectorAll('.level-card').forEach(card => {
+        card.classList.remove('easy-selected', 'medium-selected', 'hard-selected');
+    });
+    
+    const selectedCard = document.querySelector(`[data-level="${level}"]`);
+    if (selectedCard) {
+        selectedCard.classList.add(`${level}-selected`);
+    }
+    
+    // Update level indicator
+    const levelNames = {
+        easy: 'Easy',
+        medium: 'Medium', 
+        hard: 'Hard'
+    };
+    if (currentLevelSpan) {
+        currentLevelSpan.textContent = `Level: ${levelNames[level]}`;
+    }
+    
+    // Reset the game when level changes
+    resetGame();
+}
+
+function startGame() {
+    console.log('startGame called');
+    if (levelSelection && mainGame) {
+        // Add fade-out animation
+        levelSelection.classList.add('fade-out');
+        
+        setTimeout(() => {
+            levelSelection.style.display = 'none';
+            mainGame.style.display = 'block';
+            
+            // Initialize game with selected level
+            initializeGameWithLevel();
+        }, 500);
+    }
+}
+
+function showLevelSelection() {
+    console.log('showLevelSelection called');
+    if (mainGame && levelSelection) {
+        mainGame.style.display = 'none';
+        levelSelection.style.display = 'flex';
+        levelSelection.classList.remove('fade-out');
+        
+        // Reset game when going back to level selection
+        resetGame();
+    }
+}
+
+function initializeGameWithLevel() {
+    console.log(`Game initialized with level: ${currentLevel}`);
+    // Update content based on level
+    updateContentForLevel();
+}
+
+function updateContentForLevel() {
+    // Update all text content to reflect current level
+    if (quizQuestion) {
+        quizQuestion.textContent = `Click "Get Random Quiz" to get a random ${currentLevel} computer science question!`;
+    }
+    if (dareQuestion) {
+        dareQuestion.textContent = `Click "Get Random Dare" to get a random ${currentLevel} dare!`;
+    }
+    
+    // You can modify game behavior based on level
+    switch(currentLevel) {
+        case 'easy':
+            console.log('Easy mode activated');
+            break;
+        case 'medium':
+            console.log('Medium mode activated');
+            break;
+        case 'hard':
+            console.log('Hard mode activated');
+            break;
+    }
+}
+
+// Reset Function
+function resetGame() {
+    console.log('Resetting game...');
+    
+    // Reset all tabs to default state
+    resetQuizTab();
+    resetDaresTab();
+    resetMysteryTab();
+    resetDiceTab();
+    resetCoinTab();
+    
+    // Reset to first tab
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    const diceTabButton = document.querySelector('[data-tab="dice"]');
+    const diceTab = document.getElementById('dice');
+    
+    if (diceTabButton && diceTab) {
+        diceTabButton.classList.add('active');
+        diceTab.classList.add('active');
+    }
+}
+
+function resetQuizTab() {
+    // Reset quiz state
+    if (quizQuestion) {
+        quizQuestion.textContent = `Click "Get Random Quiz" to get a random ${currentLevel} computer science question!`;
+    }
+    if (quizAnswer) {
+        quizAnswer.style.display = 'none';
+        quizAnswer.textContent = '';
+    }
+    if (quizActions) {
+        quizActions.style.display = 'none';
+    }
+    if (getQuizButton) {
+        getQuizButton.style.display = 'block';
+    }
+    if (backButtonQuiz) {
+        backButtonQuiz.style.display = 'none';
+    }
+    currentQuestionIndex = -1;
+    answerRevealed = false;
+    
+    // Clear any quiz options
+    const quizOptions = document.querySelector('.quiz-options');
+    if (quizOptions) {
+        quizOptions.remove();
+    }
+}
+
+function resetDaresTab() {
+    // Reset dares state
+    if (dareQuestion) {
+        dareQuestion.textContent = `Click "Get Random Dare" to get a random ${currentLevel} dare!`;
+    }
+    if (getDareButton) {
+        getDareButton.style.display = 'block';
+    }
+    if (backButtonDare) {
+        backButtonDare.style.display = 'none';
+    }
+}
+
+function resetMysteryTab() {
+    // Reset mystery state
+    if (mysteryQuestion) {
+        mysteryQuestion.textContent = 'Click "?" when you reach the mystery box to get a random quiz or dare!';
+    }
+    if (mysteryAnswer) {
+        mysteryAnswer.style.display = 'none';
+        mysteryAnswer.textContent = '';
+    }
+    if (showMysteryAnswerButton) {
+        showMysteryAnswerButton.style.display = 'none';
+    }
+    if (getMysteryButton) {
+        getMysteryButton.style.display = 'block';
+    }
+    if (backButtonMystery) {
+        backButtonMystery.style.display = 'none';
+    }
+    currentMysteryQuizIndex = -1;
+    mysteryAnswerRevealed = false;
+    currentMysteryType = '';
+}
+
+function resetDiceTab() {
+    // Reset dice state
+    if (diceResult) {
+        diceResult.textContent = '';
+    }
+    if (diceElement) {
+        diceElement.innerHTML = '<div class="face">⚀</div>';
+        diceElement.classList.remove('rolling');
+    }
+}
+
+function resetCoinTab() {
+    // Reset coin state
+    if (coinResult) {
+        coinResult.textContent = '';
+    }
+    if (coinElement) {
+        coinElement.style.transform = 'rotateY(0deg)';
+        coinElement.classList.remove('flipping');
+    }
+    
+    // Remove any quiz/dare time buttons
+    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
+    if (quizDareButton) {
+        quizDareButton.remove();
+    }
+}
+
+// Dice Roller Functionality
+function rollDice() {
+    // Add rolling animation
+    diceElement.classList.add('rolling');
+    diceResult.textContent = '';
+    
+    setTimeout(() => {
+        const roll = Math.floor(Math.random() * 6) + 1;
+        const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        
+        diceElement.innerHTML = `<div class="face">${diceFaces[roll - 1]}</div>`;
+        diceElement.classList.remove('rolling');
+        
+        diceResult.textContent = `You rolled a ${roll}!`;
+    }, 500);
+}
+
+// COIN FLIP FUNCTIONALITY WITH QUIZ/DARE TIME
+function flipCoin() {
+    // Add flipping animation
+    coinElement.classList.add('flipping');
+    coinResult.textContent = '';
+    
+    // Remove any existing quiz/dare time buttons
+    const existingButton = document.querySelector('.quiz-dare-time-btn');
+    if (existingButton) {
+        existingButton.remove();
+    }
+    
+    setTimeout(() => {
+        const isHeads = Math.random() < 0.5;
+        const result = isHeads ? 'Heads' : 'Tails';
+        
+        // Rotate coin to show correct side
+        coinElement.style.transform = isHeads ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        coinElement.classList.remove('flipping');
+        
+        coinResult.textContent = `It's ${result}!`;
+        
+        // Show Quiz Time or Dare Time button based on result
+        showQuizOrDareButton(isHeads);
+    }, 600);
+}
+
+function showQuizOrDareButton(isHeads) {
+    // Remove any existing button first
+    const existingButton = document.querySelector('.quiz-dare-time-btn');
+    if (existingButton) {
+        existingButton.remove();
+    }
+    
+    // Create the button
+    const button = document.createElement('button');
+    button.className = 'quiz-dare-time-btn action-button';
+    
+    if (isHeads) {
+        button.textContent = '🎯 Quiz Time!';
+        button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        button.addEventListener('click', showRandomQuizFromCoin);
+    } else {
+        button.textContent = '🎭 Dare Time!';
+        button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+        button.addEventListener('click', showRandomDareFromCoin);
+    }
+    
+    // Add the button after the coin result
+    coinResult.parentNode.insertBefore(button, coinResult.nextSibling);
+}
+
+function showRandomQuizFromCoin() {
+    // Switch to quiz tab
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector('[data-tab="quiz"]').classList.add('active');
+    
+    tabContents.forEach(content => content.classList.remove('active'));
+    document.getElementById('quiz').classList.add('active');
+    
+    // Get and display a random quiz
+    getRandomQuiz();
+    
+    // Remove the quiz/dare time button
+    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
+    if (quizDareButton) {
+        quizDareButton.remove();
+    }
+}
+
+function showRandomDareFromCoin() {
+    // Switch to dares tab
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector('[data-tab="dares"]').classList.add('active');
+    
+    tabContents.forEach(content => content.classList.remove('active'));
+    document.getElementById('dares').classList.add('active');
+    
+    // Get and display a random dare
+    getRandomDare();
+    
+    // Remove the quiz/dare time button
+    const quizDareButton = document.querySelector('.quiz-dare-time-btn');
+    if (quizDareButton) {
+        quizDareButton.remove();
+    }
+}
 
 // QUIZ FUNCTIONALITY FOR MCQs
 function getRandomQuiz() {
@@ -764,17 +865,40 @@ function getRandomMystery() {
         // Get questions based on current level
         const currentLevelQuestions = computerScienceQuiz[currentLevel];
         
-        // Show a random quiz question
+        // Get a random question and store the index
         currentMysteryQuizIndex = Math.floor(Math.random() * currentLevelQuestions.length);
         const questionData = currentLevelQuestions[currentMysteryQuizIndex];
-        mysteryQuestion.textContent = `QUIZ: ${questionData.question}`;
         
-        // Show the "Show Answer" button for quiz
-        showMysteryAnswerButton.style.display = 'inline-block';
+        // Display question and options - EXACTLY like Random Quiz
+        let questionHTML = `
+            <div class="quiz-question">${questionData.question}</div>
+            <div class="quiz-options">
+        `;
+        
+        questionData.options.forEach(option => {
+            questionHTML += `<div class="quiz-option">${option}</div>`;
+        });
+        
+        questionHTML += `</div>`;
+        
+        mysteryQuestion.innerHTML = questionHTML;
+        showMysteryAnswerButton.style.display = 'block';
         showMysteryAnswerButton.textContent = 'Show Answer';
         showMysteryAnswerButton.classList.remove('revealed');
         showMysteryAnswerButton.disabled = false;
-        mysteryAnswerRevealed = false;
+        
+        // Add click listeners to options - EXACTLY like Random Quiz
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove previous selections
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // Mark this option as selected
+                this.classList.add('selected');
+            });
+        });
     } else {
         // Get dares based on current level
         const currentLevelDares = daresList[currentLevel];
@@ -795,6 +919,17 @@ function showMysteryAnswer() {
     
     if (!mysteryAnswerRevealed && currentMysteryType === 'quiz' && currentMysteryQuizIndex !== -1) {
         const questionData = currentLevelQuestions[currentMysteryQuizIndex];
+        
+        // Mark correct and incorrect answers - EXACTLY like Random Quiz
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            if (option.textContent === questionData.answer) {
+                option.classList.add('correct');
+            } else if (option.classList.contains('selected')) {
+                option.classList.add('incorrect');
+            }
+        });
+        
+        // Show explanation - EXACTLY like Random Quiz
         mysteryAnswer.innerHTML = `
             <strong>Correct Answer:</strong> ${questionData.answer}<br><br>
             <strong>Explanation:</strong> ${questionData.explanation}
@@ -821,23 +956,5 @@ function goBackToMysteryHome() {
     mysteryAnswerRevealed = false;
     currentMysteryType = '';
 }
-
-// EVENT LISTENERS
-rollDiceButton.addEventListener('click', rollDice);
-diceElement.addEventListener('click', rollDice);
-
-flipCoinButton.addEventListener('click', flipCoin);
-coinElement.addEventListener('click', flipCoin);
-
-getQuizButton.addEventListener('click', getRandomQuiz);
-showAnswerButton.addEventListener('click', showAnswer);
-backButtonQuiz.addEventListener('click', goBackToQuizHome);
-
-getDareButton.addEventListener('click', getRandomDare);
-backButtonDare.addEventListener('click', goBackToDareHome);
-
-getMysteryButton.addEventListener('click', getRandomMystery);
-showMysteryAnswerButton.addEventListener('click', showMysteryAnswer);
-backButtonMystery.addEventListener('click', goBackToMysteryHome);
 
 console.log('🎲 Maze Monopoly App Loaded Successfully!');
